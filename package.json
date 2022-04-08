@@ -1,0 +1,21 @@
+{
+  "name": "wasender",
+  "version": "1.0.0",
+  "description": "Simple engine for sending message to WhatsApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "whatsapp",
+    "bot"
+  ],
+  "author": "@toharyan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.17.3",
+    "multer": "^1.4.4",
+    "venom-bot": "^4.0.9"
+  }
+}
