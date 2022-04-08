@@ -40,7 +40,7 @@ function start(client) {
 }
 
 app.get('/', function(req, res){
-   res.send("Hello @Toharyan!");
+   res.send("WASender ready");
 });
 
 // Listen requests
