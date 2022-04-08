@@ -1,6 +1,6 @@
 # WASender
 
-Simple engine for sending message to WhatsApp
+Simple engine for sending message to WhatsApp using nodejs module [Venom](https://github.com/orkestral/venom)
 
 ## Installation
 
@@ -38,5 +38,5 @@ with post data `to` and `message`. You can simulate it using Postman.
 
 ## Credits
 
-- Venombot (https://github.com/orkestral/venom)
+- Venom (https://github.com/orkestral/venom)
 - ExpressJS
