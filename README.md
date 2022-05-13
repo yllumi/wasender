@@ -40,3 +40,11 @@ with post data `to` and `message`. You can simulate it using Postman.
 
 - Venom (https://github.com/orkestral/venom)
 - ExpressJS
+
+## Install as Service
+
+Using PM2 we can run WASender as service. Install PM2 then run this command:
+
+```
+pm2 start index.js --cron-restart="0 * * * *" -- -p 3000 -s project
+```
