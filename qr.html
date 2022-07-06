@@ -7,7 +7,7 @@
 <body>
   <div id="app">
     <h1>WASender</h1>
-    <img src="" id="qrcode" alt="QRCode">
+    <img src="https://c.tenor.com/pgO8hZgOW5AAAAAC/loading-bar.gif" id="qrcode" alt="QRCode">
     <ul class="logs"></ul>
   </div>
 
@@ -19,8 +19,9 @@
       console.log(base_url);
       var socket = io.connect(base_url, { path:'/socket.io' });
       socket.on('message', function(msg){
-        console.log(msg);
-        $('.logs').append(`<li>${msg}</li>`);
+        $('.logs').html(`<li>${msg}</li>`);
+        if(msg == 'WhatsApp is ready!')
+          $('#qrcode').remove();
       })
       socket.on('qr', function(src){
         $('#qrcode').attr('src',src);

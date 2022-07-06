@@ -4,7 +4,15 @@ Simple engine for sending message to WhatsApp using nodejs module [Venom](https:
 
 ## Installation
 
-You need to install nodejs (and also npm ofcourse) and run this command:
+You need to install nodejs and all dependencies (this is sample for ubuntu 20.04):
+
+```
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install libatk1.0-0 libatk-bridge2.0-0 libcups2 libxkbcommon-x11-0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libpango-1.0-0 libcairo2
+```
+
+Then run this command:
 
 ```
 npm install
@@ -15,7 +23,7 @@ npm install
 Run this command from root of project:
 
 ```
-node index.js -p 3001 -s toharyan
+node index.js
 ```
 
 or
@@ -46,5 +54,5 @@ with post data `to` and `message`. You can simulate it using Postman.
 Using PM2 we can run WASender as service. Install PM2 then run this command:
 
 ```
-pm2 start index.js --cron-restart="0 * * * *" -- -p 3000 -s project
+pm2 start index.js --cron-restart="0 * * * *"
 ```
