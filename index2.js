@@ -11,6 +11,9 @@ const server = http.createServer(app, {allowEIO3: true});
 const upload = multer();
 const io = socketIO(server);
 
+const port = 8091;
+const session = "client2";
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -28,7 +31,7 @@ const client = new Client({
     ],
     headless: true
   },
-  authStrategy: new LocalAuth()
+  authStrategy: new LocalAuth({ clientId:session })
 });
 
 client.on('ready', () => {
@@ -80,7 +83,6 @@ app.post('/send', upload.array(), function(req, res){
 });
 
 // Listen requests
-const port = 8090;
 server.listen(port, function(){
   console.log("Preparing whatsapp-web on port", port, "waiting for WhatsApp Web client..");
 });
