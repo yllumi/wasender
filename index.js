@@ -14,6 +14,7 @@ const io = socketIO(server);
 // Change this for antoher session
 const port = 3000;
 const session = "partnerbp";
+var status = false;
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -37,6 +38,7 @@ const client = new Client({
 
 client.on('ready', () => {
   console.log('Client is ready!');
+  status = true;
 
 });
 
@@ -53,6 +55,13 @@ client.initialize();
 // Socket.io
 io.on('connection', function(socket){
   socket.emit('message','Connecting..');
+  
+  if(status == true)
+    socket.emit('message', 'WhatsApp is ready!');
+
+  client.on('authenticated', () => {
+    socket.emit('message', 'WhatsApp is ready!');
+  })
 
   client.on('qr', (qr) => {
     qrcode.toDataURL(qr, (err, url) => {
