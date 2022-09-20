@@ -12,17 +12,17 @@ const upload = multer();
 const io = socketIO(server);
 
 // Change this for antoher session
-const port = 3000;
-const session = "partnerbp";
-var status = false;
+const port = 3001;
+const session = "penilaian";
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+var status = false;
 
 const client = new Client({
   puppeteer: {
     args: [
-    '--no-sandbox',
+      '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--disable-accelerated-2d-canvas',
@@ -94,5 +94,6 @@ app.post('/send', upload.array(), function(req, res){
 
 // Listen requests
 server.listen(port, function(){
-  console.log("Preparing whatsapp-web on port", port, "waiting for WhatsApp Web client..");
+  var msg = `Preparing whatsapp-web on port ${port}, open http://ip_address:${port}/qr for login..`;
+  console.log(msg);
 });
