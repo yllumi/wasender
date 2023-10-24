@@ -1,6 +1,6 @@
 {
   "name": "wasender",
-  "version": "1.0.0",
+  "version": "1.23.0",
   "description": "Simple engine for sending message to WhatsApp",
   "main": "index.js",
   "scripts": {

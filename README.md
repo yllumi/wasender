@@ -38,11 +38,11 @@ Before sending, we have to login first to WhatsApp Web by scanning QRCode in thi
 
 ## Sending Message
 
-To send message, simply send request to this endpoint:
+To send message, simply send POST request to this endpoint:
 
 `http://localhost:3001/send`
 
-with payload `to` and `message`. You can simulate it using Postman.
+with json payload `to` and `message`. You can simulate it using Postman.
 `to` field must begin with country code, i.e. 62864095xxxx.
 
 ## Credits
