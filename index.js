@@ -5,6 +5,8 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const axios = require('axios');
+const qs = require('qs');
 
 const app = express();
 const server = http.createServer(app, {allowEIO3: true});
@@ -36,7 +38,7 @@ const client = new Client({
   authStrategy: new LocalAuth({ clientId:session })
 });
 
-client.on('ready', () => {
+client.once('ready', () => {
   console.log('Client is ready!');
   status = true;
 
@@ -51,6 +53,33 @@ app.get('/qr', function(req, res){
 });
 
 client.initialize();
+
+// Kirim setiap pesan masuk ke endpoint webhook
+let webhookURL = 'https://18b8-125-164-24-26.ngrok-free.app/api/wasender/incoming';
+client.on('message', message => {
+  if (message.body === '!ping') {
+    client.sendMessage(message.from, 'pong');
+  }
+
+  // Data dalam format form-urlencoded
+  const postData = qs.stringify({
+    from: message.from,
+    body: message.body,
+    timestamp: message.timestamp,
+    id: message.id._serialized,
+    type: message.type,
+    isGroupMsg: message.from.endsWith('@g.us') ? '1' : '0',
+  });
+
+  axios.post(webhookURL, postData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).catch(err => {
+    console.error('Gagal mengirim ke webhook:', err.message);
+  });
+});
+
 
 // Socket.io
 io.on('connection', function(socket){
@@ -76,21 +105,39 @@ io.on('connection', function(socket){
 
 })
 
-app.post('/send', upload.array(), function(req, res){
-  client.sendMessage(req.body.to + '@c.us', req.body.message)
-  .then(response => {
+app.post('/send', upload.array(), async function(req, res) {
+  const number = req.body.to + '@c.us';
+  const message = req.body.message;
+
+  try {
+    const chat = await client.getChatById(number);
+
+    // Kirim status "typing..."
+    await chat.sendStateTyping();
+
+    // Delay acak antara 2–5 detik
+    const delay = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
+    await new Promise(resolve => setTimeout(resolve, delay));
+
+    // Hapus status typing
+    await chat.clearState();
+
+    // Kirim pesan
+    const response = await client.sendMessage(number, message);
+
     res.status(200).json({
       status: true,
       response: response
-    })
-  })
-  .catch(err => {
+    });
+
+  } catch (err) {
     res.status(500).json({
       status: false,
-      response: err
-    })
-  })
+      response: err.message || err
+    });
+  }
 });
+
 
 // Listen requests
 server.listen(port, function(){
