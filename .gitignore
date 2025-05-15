@@ -4,3 +4,4 @@ tokens/*
 !tokens/.gitkeep
 .wwebjs_auth/*
 .wwebjs_cache/*
+.env

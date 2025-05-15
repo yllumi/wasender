@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const axios = require('axios');
 const qs = require('qs');
+require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app, {allowEIO3: true});
@@ -14,8 +15,9 @@ const upload = multer();
 const io = socketIO(server);
 
 // Change this for antoher session
-const port = 3001;
-const session = "penilaian";
+const port = process.env.PORT || 3000;
+const session = process.env.SESSION || "default_session";
+const webhookURL = process.env.WEBHOOK_URL || "";
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -55,7 +57,6 @@ app.get('/qr', function(req, res){
 client.initialize();
 
 // Kirim setiap pesan masuk ke endpoint webhook
-let webhookURL = 'https://18b8-125-164-24-26.ngrok-free.app/api/wasender/incoming';
 client.on('message', message => {
   if (message.body === '!ping') {
     client.sendMessage(message.from, 'pong');
