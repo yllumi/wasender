@@ -113,11 +113,14 @@ app.post('/send', upload.array(), async function(req, res) {
   try {
     const chat = await client.getChatById(number);
 
+    // Delay acak antara 2–5 detik
+    let delay = Math.floor(Math.random() * (6000 - 3000 + 1)) + 3000;
+    
     // Kirim status "typing..."
+    await new Promise(resolve => setTimeout(resolve, delay));
     await chat.sendStateTyping();
 
-    // Delay acak antara 2–5 detik
-    const delay = Math.floor(Math.random() * (10000 - 3000 + 1)) + 3000;
+    delay = Math.floor(Math.random() * (6000 - 3000 + 1)) + 3000;
     await new Promise(resolve => setTimeout(resolve, delay));
 
     // Hapus status typing
