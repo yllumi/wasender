@@ -1,3 +1,22 @@
+# Dependency & artefak build
 node_modules
 npm-debug.log
+npm-debug.log*
+
+# Secret & konfigurasi runtime — jangan pernah masuk image (image ini publik)
+.env
+.env.*
+tokens
+tokens/*
+
+# Sesi WhatsApp hasil scan QR
+.wwebjs_auth
 .wwebjs_auth/*
+.wwebjs_cache
+.wwebjs_cache/*
+
+# Metadata repo & OS
+.git
+.gitignore
+.gitattributes
+.DS_Store

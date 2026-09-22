@@ -18,6 +18,31 @@ Then run this command:
 npm install
 ```
 
+## Docker
+
+Image resmi tersedia di Docker Hub: https://hub.docker.com/r/yllumi/wasender
+
+```
+docker run -d --name wasender \
+  -p 8090:8090 \
+  -e PORT=8090 \
+  -e SESSION=default_session \
+  -e WEBHOOK_URL=https://example.com/webhook \
+  -v wasender_auth:/app/.wwebjs_auth \
+  --restart unless-stopped \
+  yllumi/wasender:latest
+```
+
+Buka `http://localhost:8090/qr` untuk scan QRCode pertama kali. Session WhatsApp disimpan di volume `wasender_auth` agar tidak perlu scan ulang setelah container restart.
+
+Build dan publish image sendiri:
+
+```
+docker build -t yllumi/wasender:1.23.0 -t yllumi/wasender:latest .
+docker push yllumi/wasender:1.23.0
+docker push yllumi/wasender:latest
+```
+
 ## Running
 
 Run this command from root of project:

@@ -25,7 +25,9 @@ var status = false;
 
 const client = new Client({
   puppeteer: {
-    executablePath: '/usr/bin/chromium-browser',
+    // Di dalam Docker image Chromium dipasang di /usr/bin/chromium dan
+    // di-override lewat env PUPPETEER_EXECUTABLE_PATH.
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser',
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
